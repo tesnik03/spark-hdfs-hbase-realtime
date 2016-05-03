@@ -77,3 +77,4 @@ To use this, you need to do the following -
 
 3. Implement your own way to parse the incoming json [or whatever format data is coming ]
 
+![Alt text](/Functionality.jpg?raw=true "Dataflow")
