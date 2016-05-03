@@ -26,8 +26,6 @@ This project is for realtime schema update. The ideas behind this project are fo
 8. We will use Impala to store full data.
 9. Impala requires to run "Refresh <table name>" whenever you load any additional data file. 
 
-
-
 #Concept behind this project -
 1. HBase writes are costly, so we will have only primary key and version per table in HBase. For a given JSON example - 
     ````{"pkCol":1, "name":"Mary", "age":"24", "version": 2}````
