@@ -28,7 +28,7 @@ This project is for realtime schema update. The ideas behind this project are fo
 
 
 
-##Concept behind this project -
+#Concept behind this project -
 1. HBase writes are costly, so we will have only primary key and version per table in HBase. For a given JSON example - 
     ````{"pkCol":1, "name":"Mary", "age":"24", "version": 2}````
    Lets say, primary key is pKCol, then in that case we will have pkCol and version as the column and have it in the HBASE.
@@ -37,7 +37,7 @@ This project is for realtime schema update. The ideas behind this project are fo
    Example - create view Person as ````Select * from Person_Impala pi join Person_Hbase ph where pi.pkCol = ph.pKCol and pi.version = ph.version```` 
    Since, Person_Hbase will always have most recently update version and pkCol can provide uniqueness, you wiill always get the latest data.
 
-##Example case -
+#Example case -
 
 We have a requirement where we have to keep track of all changes that happens over the period of time in data set. But for the BI tools we have to provide the latest data.
 
