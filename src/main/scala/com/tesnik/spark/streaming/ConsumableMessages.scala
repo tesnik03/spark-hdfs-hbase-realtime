@@ -11,5 +11,5 @@ trait ConsumableMessages {
 
 trait CounsumedMessagesOuput {
   def getHDFSMessages():Map[String, String]
-  def getHBaseConsumableMessages[T >: AnyVal]():MessagesForHBase[T]
+  def getHBaseConsumableMessages():MessagesForHBase
 }

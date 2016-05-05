@@ -11,11 +11,11 @@ import scala.reflect.ClassTag
   * Created by tiwariaa on 4/30/2016.
   */
 
-case class HBaseConsumableMessage[T >: AnyVal](conn:Connection, table:String, keyValues:Map[String, T], columns:List[String])
-case class MessagesForHBase[T >: AnyVal](messages: List[HBaseConsumableMessage[T]])
+case class HBaseConsumableMessage(table:String, keyValues:Map[String, Any], columns:List[String])
+case class MessagesForHBase(messages: List[HBaseConsumableMessage])
 class DynamicUpsertDML extends Actor {
 
-  def getPreparedStatement[T >: AnyVal](messagesForHBase: MessagesForHBase[T]):List[String] = {
+  def getPreparedStatement(messagesForHBase: MessagesForHBase):List[String] = {
     messagesForHBase.messages.map( message => {
       val query = new StringBuffer("upsert into $table ")
       val keyList = message.columns
@@ -37,14 +37,12 @@ class DynamicUpsertDML extends Actor {
     })
   }
 
-
-
-  def receive[T >: AnyVal] = {
-    case messages:MessagesForHBase[T] => updateStatements(messages)
+  def receive = {
+    case messages:MessagesForHBase => updateStatements(messages)
     case _ => printf("Error unknow paramenter")
   }
 
-  def updateStatements[T >: AnyVal](messagesForHBase: MessagesForHBase[T]) = {
+  def updateStatements(messagesForHBase: MessagesForHBase) = {
 
     val updateStatementes = getPreparedStatement(messagesForHBase)
     val con = HbaseConnection.getConnection
@@ -52,9 +50,10 @@ class DynamicUpsertDML extends Actor {
       val stmnt:Statement = con.createStatement()
       stmnt.executeUpdate(updateStmnt)
     })
+    HbaseConnection.closeConnection
   }
 
-  private def appendQueryBasedOnType[T >: AnyVal](input:T): Option[String] = {
+  private def appendQueryBasedOnType[T >: AnyVal](input: T): Option[String] = {
     input match {
       case value: String => Some("'" + value + "'")
       case value: Int => Some(value.toString)

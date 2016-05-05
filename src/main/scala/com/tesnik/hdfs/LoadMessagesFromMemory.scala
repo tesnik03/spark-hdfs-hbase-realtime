@@ -26,7 +26,6 @@ class LoadMessagesFromMemory(location: String, rowValue: String) extends MemoryB
 
     val fs = FileSystem.get(new Configuration)
     val rootDistDir = location
-    val r = new Random
     val rootName = "/part-m-" + System.currentTimeMillis()
     val tmpPath = new Path(rootDistDir + rootName + ".tmp")
     val writer = new BufferedWriter(new OutputStreamWriter(fs.create(tmpPath)))
