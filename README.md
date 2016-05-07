@@ -66,6 +66,7 @@ create view as person as select * from person_impala pi join person_hbase ph on 
 
 With this, as long as we will be using view instead of table person_impala, we will always get the latest record. 
 
+![Alt text](/Functionality.jpg?raw=true "Dataflow")
 
 To use this, you need to do the following -
 
@@ -75,4 +76,4 @@ To use this, you need to do the following -
 
 3. Implement your own way to parse the incoming json [or whatever format data is coming ]
 
-![Alt text](/Functionality.jpg?raw=true "Dataflow")
+
